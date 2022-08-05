@@ -23,7 +23,7 @@ function App() {
     setResult(check(prepared))
   }
 
-  const sumsOptions = sums?.[parseInt(numberRef.current.value)]
+  const sumsOptions = sums?.[parseInt(numberRef.current?.value)]
 
   return (
     <div className="App">
