@@ -7,8 +7,8 @@ export const check = ({sum, length, included, excluded} = {}) => {
     return []
   }
 
-  const include = included.split(' ').map((d) => parseInt(d))
-  const exclude = excluded.split(' ').map((d) => parseInt(d))
+  const include = included.split('').map((d) => parseInt(d))
+  const exclude = excluded.split('').map((d) => parseInt(d))
 
   return combinations.filter((combination) => {
     const hasIncluded = !included || include.every((i) => combination.includes(i))
