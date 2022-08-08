@@ -3,14 +3,12 @@ import './App.css';
 import { check } from "./logic/check";
 import { sums } from "./logic/sums";
 
-const prepareData = (data) => {
-  return {
-    sum: data.sum.value,
-    length: data.number.value,
-    included: data.included.value,
-    excluded: data.excluded.value
-  }
-}
+const prepareData = (data) => ({
+  sum: data.sum.value,
+  length: data.number.value,
+  included: data.included.value,
+  excluded: data.excluded.value
+})
 
 function App() {
   const formRef = useRef()
@@ -18,12 +16,11 @@ function App() {
   const [results, setResult] = useState([])
 
   const handleChange = () => {
-    let prepared = prepareData(formRef.current.elements);
-    console.log({prepared});
+    const prepared = prepareData(formRef.current.elements);
     setResult(check(prepared))
   }
 
-  const sumsOptions = sums?.[parseInt(numberRef.current?.value)]
+  const sumsOptions = sums?.[parseInt(numberRef.current?.value || '2')]
 
   return (
     <div className="App">
@@ -63,7 +60,7 @@ function App() {
         title="Inline Frame Example"
         width="600"
         height="100%"
-        src="https://sudoku.com/"
+        src="https://sudoku.com/killer/expert/"
       />
     </div>
   );
