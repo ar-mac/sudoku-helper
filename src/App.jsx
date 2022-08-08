@@ -1,41 +1,53 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { check } from "./logic/check";
 import { sums } from "./logic/sums";
 
-const prepareData = (data) => ({
-  sum: data.sum.value,
-  length: data.number.value,
-  included: data.included.value,
-  excluded: data.excluded.value
-})
-
 function App() {
-  const formRef = useRef()
-  const numberRef = useRef()
-  const [results, setResult] = useState([])
+  const [data, setData] = useState({ number: 2, results: [] })
 
-  const handleChange = () => {
-    const prepared = prepareData(formRef.current.elements);
-    setResult(check(prepared))
+  const handleChange = (e) => {
+    setData((prev) => {
+      const newData = {...prev, [e.target.name]: e.target.value}
+
+      return { ...newData, results: check(newData) }
+    })
   }
 
-  const sumsOptions = sums?.[parseInt(numberRef.current?.value || '2')]
+  const sumsOptions = sums[parseInt(data.number)]
 
   return (
     <div className="App">
       <div className="Form-wrapper">
-        <form ref={formRef}>
-          <label htmlFor='number'>Number of digits</label>
-          <select ref={numberRef} onChange={handleChange} id='number' name='number' style={{width: '120px'}}>
-            <option value='2'>2</option>
-            <option value='3'>3</option>
-            <option value='4'>4</option>
-            <option value='5'>5</option>
-          </select>
+        <form>
+          <fieldset onChange={handleChange}>
+            <legend>Number of digits:</legend>
+
+            <div>
+              <input type="radio" id="2" name="number" value="2" defaultChecked/>
+              <label htmlFor="2">2</label>
+            </div>
+
+            <div>
+              <input type="radio" id="3" name="number" value="3"/>
+              <label htmlFor="3">3</label>
+            </div>
+
+            <div>
+              <input type="radio" id="4" name="number" value="4"/>
+              <label htmlFor="4">4</label>
+            </div>
+
+            <div>
+              <input type="radio" id="5" name="number" value="5"/>
+              <label htmlFor="5">5</label>
+            </div>
+
+          </fieldset>
           <br/>
           <label htmlFor='sum'>Sum of digits</label>
           <select onChange={handleChange} id='sum' name='sum' required style={{width: '120px'}}>
+            <option value=''>Select</option>
             {sumsOptions && Object.keys(sumsOptions).map((sum) => (
               <option key={sum} value={sum}>{sum}</option>
             ))}
@@ -49,7 +61,7 @@ function App() {
           <input onChange={handleChange} id='excluded' name='excluded' style={{width: '120px'}}/>
         </form>
 
-        {!!results?.length && <p>Result: <ul>{results.map((result) =>
+        {!!data.results?.length && <p>Result: <ul>{data.results.map((result) =>
           <li><b>{result}</b></li>
         )}</ul></p>}
       </div>

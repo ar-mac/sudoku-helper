@@ -1,7 +1,7 @@
 import { sums } from "./sums";
 
-export const check = ({sum, length, included, excluded} = {}) => {
-  const combinations = sums?.[parseInt(length)]?.[parseInt(sum)]
+export const check = ({sum, number, included = '', excluded = ''} = {}) => {
+  const combinations = sums?.[parseInt(number)]?.[parseInt(sum)]
 
   if (!combinations?.length) {
     return []
