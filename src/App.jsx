@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import './App.css';
 import { check } from "./logic/check";
 import { sums } from "./logic/sums";
@@ -20,29 +20,15 @@ function App() {
     <div className="App">
       <div className="Form-wrapper">
         <form>
-          <fieldset onChange={handleChange}>
+          <fieldset onChange={handleChange} className="fieldset-number">
             <legend>Number of digits:</legend>
 
-            <div>
-              <input type="radio" id="2" name="number" value="2" defaultChecked/>
-              <label htmlFor="2">2</label>
-            </div>
-
-            <div>
-              <input type="radio" id="3" name="number" value="3"/>
-              <label htmlFor="3">3</label>
-            </div>
-
-            <div>
-              <input type="radio" id="4" name="number" value="4"/>
-              <label htmlFor="4">4</label>
-            </div>
-
-            <div>
-              <input type="radio" id="5" name="number" value="5"/>
-              <label htmlFor="5">5</label>
-            </div>
-
+            {[2,3,4,5].map((digit) => (
+              <Fragment key={digit}>
+                <input type="radio" id={digit} name="number" value={digit} defaultChecked={digit === 2} style={{display: "none"}}/>
+                <label htmlFor={digit} className={`number-label ${parseInt(data.number) === digit ? '-selected' : ''}`}>{digit}</label>
+              </Fragment>
+            ))}
           </fieldset>
           <br/>
           <label htmlFor='sum'>Sum of digits</label>

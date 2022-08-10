@@ -7,3 +7,26 @@
   padding: 30px;
   flex-basis: 30%;
 }
+
+.fieldset-number {
+  display: flex;
+  justify-content: space-around;
+}
+
+.number-label {
+  --labelsize: 50px;
+  --fontsize: calc(var(--labelsize) - 5px);
+  width: var(--labelsize);
+  height: var(--labelsize);
+  background-color: whitesmoke;
+  display: inline-block;
+  text-align: center;
+  border: 1px dashed black;
+  font-size: var(--fontsize);
+  line-height: var(--fontsize);
+  color: #0172e3;
+}
+
+.-selected {
+  background-color: #bbdefb;
+}
