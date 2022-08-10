@@ -5,17 +5,23 @@
 
 .Form-wrapper {
   padding: 30px;
-  flex-basis: 30%;
+  max-width: 28%;
 }
 
 .fieldset-number {
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-content: flex-start;
+}
+
+.-constant-height {
+  height: 255px;
 }
 
 .number-label {
   --labelsize: 50px;
-  --fontsize: calc(var(--labelsize) - 5px);
+  --fontsize: calc(var(--labelsize) - 15px);
   width: var(--labelsize);
   height: var(--labelsize);
   background-color: whitesmoke;
@@ -23,7 +29,7 @@
   text-align: center;
   border: 1px dashed black;
   font-size: var(--fontsize);
-  line-height: var(--fontsize);
+  line-height: var(--labelsize);
   color: #0172e3;
 }
 

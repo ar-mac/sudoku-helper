@@ -4,17 +4,22 @@ import { check } from "./logic/check";
 import { sums } from "./logic/sums";
 
 function App() {
-  const [data, setData] = useState({ number: 2, results: [] })
+  const [data, setData] = useState({ number: '2', sum: '3', results: [] })
 
-  const handleChange = (e) => {
+  const handleChange = ({target: {name, value}}) => {
     setData((prev) => {
-      const newData = {...prev, [e.target.name]: e.target.value}
+      const newData = {...prev, [name]: value}
 
-      return { ...newData, results: check(newData) }
+      if (name === 'number') {
+        newData.sum = Object.keys(sums[parseInt(newData.number)] || {})[0] || null
+      }
+
+      newData.results = check(newData)
+      return newData
     })
   }
 
-  const sumsOptions = sums[parseInt(data.number)]
+  const sumsOptions = sums[parseInt(data.number)] || {}
 
   return (
     <div className="App">
@@ -23,21 +28,25 @@ function App() {
           <fieldset onChange={handleChange} className="fieldset-number">
             <legend>Number of digits:</legend>
 
-            {[2,3,4,5].map((digit) => (
+            {['2','3','4','5'].map((digit) => (
               <Fragment key={digit}>
                 <input type="radio" id={digit} name="number" value={digit} defaultChecked={digit === 2} style={{display: "none"}}/>
-                <label htmlFor={digit} className={`number-label ${parseInt(data.number) === digit ? '-selected' : ''}`}>{digit}</label>
+                <label htmlFor={digit} className={`number-label ${data.number === digit ? '-selected' : ''}`}>{digit}</label>
               </Fragment>
             ))}
           </fieldset>
           <br/>
-          <label htmlFor='sum'>Sum of digits</label>
-          <select onChange={handleChange} id='sum' name='sum' required style={{width: '120px'}}>
-            <option value=''>Select</option>
-            {sumsOptions && Object.keys(sumsOptions).map((sum) => (
-              <option key={sum} value={sum}>{sum}</option>
+
+          <fieldset onChange={handleChange} className="fieldset-number -constant-height" key={data.number}>
+            <legend>Sum of digits:</legend>
+
+            {Object.keys(sumsOptions).map((digit) => (
+              <Fragment key={digit}>
+                <input type="radio" id={digit} name="sum" value={digit} style={{display: "none"}}/>
+                <label htmlFor={digit} className={`number-label ${data.sum === digit ? '-selected' : ''}`}>{digit}</label>
+              </Fragment>
             ))}
-          </select>
+          </fieldset>
           <br/>
 
           <label htmlFor='included'>Required digits</label>
@@ -47,9 +56,9 @@ function App() {
           <input onChange={handleChange} id='excluded' name='excluded' style={{width: '120px'}}/>
         </form>
 
-        {!!data.results?.length && <p>Result: <ul>{data.results.map((result) =>
+        {!!data.results?.length && <div>Result: <ul>{data.results.map((result) =>
           <li><b>{result}</b></li>
-        )}</ul></p>}
+        )}</ul></div>}
       </div>
 
 
