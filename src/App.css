@@ -1,14 +1,19 @@
 .App {
   display: flex;
   height: 100vh;
+  justify-content: center;
 }
 
 .Form-wrapper {
   padding: 30px;
-  max-width: 28%;
+  flex: 0 0 332px;
   display: flex;
   flex-direction: column;
   gap: 15px;
+}
+
+.Iframe-wrapper {
+  flex: 0 0 600px;
 }
 
 .fieldset-number {
