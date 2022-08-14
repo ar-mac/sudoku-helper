@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from 'react';
 import './App.css';
-import { check } from "./logic/check";
+import { check as getResults } from "./logic/check";
 import { sums } from "./logic/sums";
 
 function App() {
-  const [data, setData] = useState({ number: '2', sum: '3', results: [] })
+  const [data, setData] = useState({ number: '2', sum: '3', results: getResults({number: '2', sum: '3'}) })
 
   const handleChange = ({target}) => {
     const {name, value} = target
@@ -17,7 +17,7 @@ function App() {
         newData.sum = Object.keys(sums[parseInt(newData.number)])[0]
       }
 
-      newData.results = check(newData)
+      newData.results = getResults(newData)
       return newData
     })
   }
@@ -62,9 +62,18 @@ function App() {
         <div>
           <span className="cluded-label">Result:</span>
           <div className="results-container">
-            {!!data.results?.length
-              ? data.results.map((result) => <span key={result}>{result}</span>)
+            {!!data.results.combinations?.length
+              ? data.results.combinations.map((result) => <span key={result}>{result}</span>)
               : <span>No results</span>
+            }
+          </div>
+        </div>
+        <div>
+          <span className="cluded-label">Digits:</span>
+          <div className="results-container">
+            {!!data.results.digits?.length
+              ? data.results.digits.map((result) => <span key={result}>{result}</span>)
+              : <span>No allowed digits!</span>
             }
           </div>
         </div>
