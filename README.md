@@ -30,3 +30,11 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### TODO
+
+- Migrate to Tailwind
+- Add eslint and prettier
+- Migrate to Preact
+- Add shortcuts
+- Improve UI
