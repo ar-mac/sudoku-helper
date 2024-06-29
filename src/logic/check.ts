@@ -1,13 +1,12 @@
-import { sums } from "./sums";
+import { sums } from './sums'
 
 export interface CheckProps {
-  sum: number,
-  number: number,
+  sum: number
+  number: number
   included: number[]
   excluded: number[]
 }
-export const check = ({sum, number, included, excluded}: CheckProps) => {
-  console.log({sum, number, included, excluded })
+export const check = ({ sum, number, included, excluded }: CheckProps) => {
   const combinations = sums?.[number]?.[sum]
 
   if (!combinations?.length) {
@@ -15,9 +14,11 @@ export const check = ({sum, number, included, excluded}: CheckProps) => {
   }
 
   const filteredCombinations = combinations.filter((combination) => {
-    const hasIncluded = !included.length || included.every((i) => combination.includes(i))
-    const omitsExcluded = !excluded.length || excluded.every((i) => !combination.includes(i))
-    return (hasIncluded && omitsExcluded)
+    const hasIncluded =
+      !included.length || included.every((i) => combination.includes(i))
+    const omitsExcluded =
+      !excluded.length || excluded.every((i) => !combination.includes(i))
+    return hasIncluded && omitsExcluded
   })
 
   const filteredDigits: number[] = []
@@ -29,5 +30,6 @@ export const check = ({sum, number, included, excluded}: CheckProps) => {
     })
   })
   filteredDigits.sort()
+
   return { combinations: filteredCombinations, digits: filteredDigits }
 }

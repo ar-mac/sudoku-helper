@@ -33,8 +33,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ### TODO
 
-- Migrate to Tailwind
-- Add eslint and prettier
-- Migrate to Preact
 - Add shortcuts
+- Migrate to Preact
+- Migrate to Tailwind
 - Improve UI
