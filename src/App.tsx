@@ -79,16 +79,7 @@ function App() {
         </div>
       </div>
 
-
-      <div className="Iframe-wrapper">
-        <iframe
-          id="inlineFrameExample"
-          title="Inline Frame Example"
-          width="600"
-          height="100%"
-          src="https://sudoku.com/killer/expert/"
-        />
-      </div>
+      <Iframe />
     </div>
   );
 }
