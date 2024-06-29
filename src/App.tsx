@@ -4,7 +4,8 @@ import { check as getResults, CheckProps } from './logic/check'
 import { sums } from './logic/sums'
 import Iframe from './Iframe'
 
-const numbersOfDigits = [2, 3, 4, 5]
+const DIGITS_IN_GROUP = [2, 3, 4, 5]
+const GROUP_SUM = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 export default function App() {
   const [data, setData] = useState<CheckProps>({
@@ -22,7 +23,8 @@ export default function App() {
     setData((prev) => {
       const newData = { ...prev, [name]: parseInt(value) }
 
-      if (name === 'number' && !sums[newData.number][newData.sum]) {
+      const noSumForChangedNumber = !sums[newData.number][newData.sum]
+      if (name === 'number' && noSumForChangedNumber) {
         newData.sum = parseInt(Object.keys(sums[newData.number])[0])
       }
 
@@ -46,9 +48,9 @@ export default function App() {
     <div className="App">
       <div className="Form-wrapper">
         <fieldset onChange={handleChange} className="fieldset-number">
-          <legend>Number of digits:</legend>
+          <legend>Group size</legend>
 
-          {numbersOfDigits.map((digit) => (
+          {DIGITS_IN_GROUP.map((digit) => (
             <Fragment key={digit}>
               <input
                 type="radio"
@@ -73,7 +75,7 @@ export default function App() {
           className="fieldset-number -constant-height"
           key={data.number}
         >
-          <legend>Sum of digits:</legend>
+          <legend>Group sum</legend>
 
           {Object.keys(sumsOptions).map((digit) => (
             <Fragment key={digit}>
@@ -94,9 +96,9 @@ export default function App() {
           ))}
         </fieldset>
 
-        <div>
+        <div className="cluded-input-wrapper">
           <label className="cluded-label" htmlFor="included">
-            Required digits:{' '}
+            Required
           </label>
           <input
             onChange={handleInExclusionChange}
@@ -106,9 +108,9 @@ export default function App() {
           />
         </div>
 
-        <div>
+        <div className="cluded-input-wrapper">
           <label className="cluded-label" htmlFor="excluded">
-            Prevented digits:{' '}
+            Prevented
           </label>
           <input
             onChange={handleInExclusionChange}
@@ -119,7 +121,7 @@ export default function App() {
         </div>
 
         <div>
-          <span className="cluded-label">Result:</span>
+          <span className="results-label">Result:</span>
           <div className="results-container">
             {results.combinations?.length ? (
               results.combinations.map((result) => (
@@ -131,10 +133,19 @@ export default function App() {
           </div>
         </div>
         <div>
-          <span className="cluded-label">Digits:</span>
+          <span className="results-label">Digits:</span>
           <div className="results-container">
             {results.digits?.length ? (
-              results.digits.map((result) => <span key={result}>{result}</span>)
+              GROUP_SUM.map((digit) => (
+                <span
+                  key={digit}
+                  className={
+                    results.digits.includes(digit) ? '' : 'inactive-result'
+                  }
+                >
+                  {digit}
+                </span>
+              ))
             ) : (
               <span>No allowed digits!</span>
             )}
