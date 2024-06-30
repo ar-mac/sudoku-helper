@@ -1,12 +1,12 @@
 .App {
   display: flex;
   height: 100vh;
-  justify-content: center;
+  justify-content: start;
 }
 
 .Form-wrapper {
   padding: 30px;
-  flex: 0 0 394px;
+  flex: 0 0 580px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -24,7 +24,7 @@
 }
 
 .-constant-height {
-  height: 255px;
+  height: 193px;
 }
 
 .number-label {
@@ -38,30 +38,27 @@
   border: 1px dashed black;
   font-size: var(--fontsize);
   line-height: var(--labelsize);
-  color: #0172e3;
+  color: #07E;
+}
+
+.-included {
+  color: #0A4;
+}
+
+.-excluded {
+  color: #E70;
+}
+
+.-selected.-included {
+  background-color: #AEC;
+}
+
+.-selected.-excluded {
+  background-color: #FDB;
 }
 
 .-selected {
-  background-color: #bbdefb;
-}
-
-.cluded-input-wrapper {
-  position: relative;
-}
-
-.cluded-input {
-  width: 100%;
-  font-size: 24px;
-  box-sizing: border-box;
-  padding: 8px 6px 6px 6px;
-}
-
-.cluded-label {
-  position: absolute;
-  top: -14px;
-  left: 10px;
-  background: white;
-  padding: 4px;
+  background-color: #BDF;
 }
 
 .results-label {
@@ -79,5 +76,5 @@
 }
 
 .inactive-result {
-  color: #C6C6C6;
+  color: #c6c6c6;
 }

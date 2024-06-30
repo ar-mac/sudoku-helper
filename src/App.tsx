@@ -5,7 +5,7 @@ import { sums } from './logic/sums'
 import Iframe from './Iframe'
 
 const DIGITS_IN_GROUP = [2, 3, 4, 5]
-const GROUP_SUM = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 export default function App() {
   const [data, setData] = useState<CheckProps>({
@@ -34,12 +34,22 @@ export default function App() {
 
   const handleInExclusionChange = ({
     target,
-  }: React.FormEvent<HTMLInputElement>) => {
+  }: React.FormEvent<HTMLInputElement | HTMLFieldSetElement>) => {
     const { name, value } = target as HTMLInputElement
-    setData((prev) => ({
-      ...prev,
-      [name]: value.split('').map((d) => parseInt(d)),
-    }))
+    const newValue = parseInt(value)
+    setData((prev) => {
+      const inExClusionValues = prev[name as keyof CheckProps] as number[]
+
+      const index = inExClusionValues.indexOf(newValue)
+      const newValues =
+        index === -1
+          ? [...inExClusionValues, newValue]
+          : [
+              ...inExClusionValues.slice(0, index),
+              ...inExClusionValues.slice(index + 1),
+            ]
+      return { ...prev, [name]: newValues }
+    })
   }
 
   const sumsOptions = sums[data.number] || {}
@@ -96,29 +106,55 @@ export default function App() {
           ))}
         </fieldset>
 
-        <div className="cluded-input-wrapper">
-          <label className="cluded-label" htmlFor="included">
-            Required
-          </label>
-          <input
-            onChange={handleInExclusionChange}
-            id="included"
-            name="included"
-            className="cluded-input"
-          />
-        </div>
+        <fieldset
+          onChange={handleInExclusionChange}
+          className="fieldset-number"
+        >
+          <legend>Included</legend>
 
-        <div className="cluded-input-wrapper">
-          <label className="cluded-label" htmlFor="excluded">
-            Prevented
-          </label>
-          <input
-            onChange={handleInExclusionChange}
-            id="excluded"
-            name="excluded"
-            className="cluded-input"
-          />
-        </div>
+          {DIGITS.map((digit) => (
+            <Fragment key={digit}>
+              <input
+                type="checkbox"
+                id={`included-number-${digit}`}
+                name="included"
+                value={digit}
+                style={{ display: 'none' }}
+              />
+              <label
+                htmlFor={`included-number-${digit}`}
+                className={`number-label -included ${data.included.includes(digit) ? '-selected' : ''}`}
+              >
+                {digit}
+              </label>
+            </Fragment>
+          ))}
+        </fieldset>
+
+        <fieldset
+          onChange={handleInExclusionChange}
+          className="fieldset-number"
+        >
+          <legend>Excluded</legend>
+
+          {DIGITS.map((digit) => (
+            <Fragment key={digit}>
+              <input
+                type="checkbox"
+                id={`excluded-number-${digit}`}
+                name="excluded"
+                value={digit}
+                style={{ display: 'none' }}
+              />
+              <label
+                htmlFor={`excluded-number-${digit}`}
+                className={`number-label -excluded ${data.excluded.includes(digit) ? '-selected' : ''}`}
+              >
+                {digit}
+              </label>
+            </Fragment>
+          ))}
+        </fieldset>
 
         <div>
           <span className="results-label">Result:</span>
@@ -136,7 +172,7 @@ export default function App() {
           <span className="results-label">Digits:</span>
           <div className="results-container">
             {results.digits?.length ? (
-              GROUP_SUM.map((digit) => (
+              DIGITS.map((digit) => (
                 <span
                   key={digit}
                   className={
