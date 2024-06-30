@@ -52,6 +52,10 @@ export default function App() {
     })
   }
 
+  const clearInExClusion = (name: string) => () => {
+    setData((prevState) => ({ ...prevState, [name]: [] }))
+  }
+
   const sumsOptions = sums[data.number] || {}
 
   return (
@@ -129,6 +133,7 @@ export default function App() {
               </label>
             </Fragment>
           ))}
+          <button className="cluded-clear" onClick={clearInExClusion('included')}>X</button>
         </fieldset>
 
         <fieldset
@@ -154,6 +159,7 @@ export default function App() {
               </label>
             </Fragment>
           ))}
+          <button className="cluded-clear" onClick={clearInExClusion('excluded')}>X</button>
         </fieldset>
 
         <div>

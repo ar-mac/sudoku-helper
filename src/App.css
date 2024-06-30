@@ -21,6 +21,7 @@
   flex-wrap: wrap;
   gap: 10px;
   align-content: flex-start;
+  position: relative;
 }
 
 .-constant-height {
@@ -59,6 +60,13 @@
 
 .-selected {
   background-color: #BDF;
+}
+
+.cluded-clear {
+  position: absolute;
+  top: -27px;
+  right: -17px;
+  padding: 8px 10px;
 }
 
 .results-label {
