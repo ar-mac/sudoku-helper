@@ -7,6 +7,14 @@ import Iframe from './Iframe'
 const DIGITS_IN_GROUP = [2, 3, 4, 5]
 const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
+interface ClusionType {
+  [key: string]: string
+}
+
+const CLUSION_MAP: ClusionType = {
+  included: 'excluded',
+  excluded: 'included',
+}
 export default function App() {
   const [data, setData] = useState<CheckProps>({
     number: 2,
@@ -39,8 +47,13 @@ export default function App() {
     const newValue = parseInt(value)
     setData((prev) => {
       const inExClusionValues = prev[name as keyof CheckProps] as number[]
+      const otherName = CLUSION_MAP[name as keyof CheckProps]
+      const otherInExClusionValues = prev[
+        otherName as keyof CheckProps
+      ] as number[]
 
       const index = inExClusionValues.indexOf(newValue)
+      const otherIndex = otherInExClusionValues.indexOf(newValue)
       const newValues =
         index === -1
           ? [...inExClusionValues, newValue]
@@ -48,7 +61,15 @@ export default function App() {
               ...inExClusionValues.slice(0, index),
               ...inExClusionValues.slice(index + 1),
             ]
-      return { ...prev, [name]: newValues }
+      const otherNewValues =
+        otherIndex === -1
+          ? otherInExClusionValues
+          : [
+              ...otherInExClusionValues.slice(0, otherIndex),
+              ...otherInExClusionValues.slice(otherIndex + 1),
+            ]
+
+      return { ...prev, [name]: newValues, [otherName]: otherNewValues }
     })
   }
 
@@ -133,7 +154,12 @@ export default function App() {
               </label>
             </Fragment>
           ))}
-          <button className="cluded-clear" onClick={clearInExClusion('included')}>X</button>
+          <button
+            className="cluded-clear"
+            onClick={clearInExClusion('included')}
+          >
+            X
+          </button>
         </fieldset>
 
         <fieldset
@@ -159,7 +185,12 @@ export default function App() {
               </label>
             </Fragment>
           ))}
-          <button className="cluded-clear" onClick={clearInExClusion('excluded')}>X</button>
+          <button
+            className="cluded-clear"
+            onClick={clearInExClusion('excluded')}
+          >
+            X
+          </button>
         </fieldset>
 
         <div>
