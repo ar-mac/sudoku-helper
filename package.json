@@ -2,6 +2,9 @@
   "name": "sudoku-helper",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "^18.18.0"
+  },
   "dependencies": {
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "^1.0.6",
