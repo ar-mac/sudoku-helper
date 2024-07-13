@@ -1,7 +1,7 @@
 .App {
   display: flex;
   height: 100vh;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .Form-wrapper {
